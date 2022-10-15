@@ -43,6 +43,6 @@ public class CSGO implements IGame{
 
     @Override
     public String toString() {
-        return "CSGO Player(name: " + name + ")";
+        return "[CSGO " + name + "]";
     }
 }
