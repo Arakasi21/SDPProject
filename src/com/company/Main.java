@@ -1,12 +1,18 @@
 package com.company;
 
 import com.company.gameplayer.IGame;
+
+import com.company.iterator.StaffIterator;
 import com.company.singleton.Stats;
+
 import com.company.factory.PlayerFactory;
+
 import com.company.iterator.PlayerIterator;
 import com.company.iterator.Iterator;
+import com.company.staff.manager;
 
-import java.util.ArrayList;
+import com.company.workstrategy.*;
+
 import java.util.Scanner;
 
 public class Main {
@@ -15,38 +21,47 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        //factory
         PlayerFactory playerFactory = new PlayerFactory();
+
         PlayerIterator playerIterator = new PlayerIterator();
+        StaffIterator staffIterator = new StaffIterator();
 
-        System.out.println("************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********\n");
+        DoMedia domedia = new DoMedia();
+        DoEvent doevent = new DoEvent();
 
-        System.out.println("*********************** Starting Panel *****************************\n");
+        System.out.println("[************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********]\n");
+
+            System.out.println("[*********************** Starting Panel *****************************]\\n");
 
 
-        while (true) {
-            //-----------------Starting Panel-----------------------
+        while (true) { //бесконечный луп для того, чтобы наша панелька не останавливалась. Остановится когда choice = 0
+            //-----------------Начальная панель.-----------------------
+            //в будущем будут добавлены мемберы стаффа aitugaming
             System.out.println(
-                    "Choose one option: \n" +
-                            "1)Add player\n" +
-                            "2)Add member\n" +
-                            "3)Show information about players\n" +
-                            "0)Close panel"
+                    """
+                            [Choose one option:... ]\s
+                            [1] Add player
+                            [2] Add member
+                            [3] Show information about players
+                            [4] Show information about managers
+                            [0] Close panel"""
             );
 
             int choice = scanner.nextInt();
             //-------------------------------------------------------------------
 
             if (choice == 0) {
-                System.out.println("*********************** Panel Is Closed *****************************\n");
+                System.out.println("[*********************** Panel Is Closed *****************************]\n");
                 break;
             }
 
-            //---------------------------Adding players----------------------
+            //---------------------------Добавление игроков----------------------
             if (choice == 1) {
-                System.out.println("Choose game to witch one you want to add player:\n" +
-                        "1)DOTA2 \n" +
-                        "2)CS:GO\n"
+                System.out.println("""
+                        Choose game to witch one you want to add player:
+                        1)DOTA2\s
+                        2)CS:GO
+                        """
                 );
 
                 choice = scanner.nextInt();
@@ -72,13 +87,51 @@ public class Main {
             }
             //-------------------------------------------------------------------------------
 
-            //--------------------------- Show Players ------------------------------
+
+            //---------------------------Добавление манагеров----------------------
+            if (choice == 2) {
+                System.out.println("Write name of new staff member:");
+                String name = scanner.next();
+                System.out.println("Choose the specialization for manager:\n" +
+                        "1)Doing event (manager) \n" +
+                        "2)Doing media (smm) \n" +
+                        "3)Go Back\n"
+                );
+
+                choice = scanner.nextInt();
+
+                if (choice == 1) {
+                    StaffIterator.managers.add(new manager(name, doevent));
+
+                    Stats.getStats().NumberOfStaffMembers++;
+                    Stats.getStats().NumberOfManagers++;
+
+                } else if (choice == 2) {
+                    StaffIterator.managers.add(new manager(name, domedia));
+                    Stats.getStats().NumberOfStaffMembers++;
+                    Stats.getStats().NumberOfManagers++;
+
+                }
+                else if (choice == 3) {
+                    System.out.println("Going back to start panel");
+                    System.out.println("**************************************************");
+                    continue;
+                }
+
+                System.out.println("**************************************************/n");
+                continue;
+            }
+            //-------------------------------------------------------------------------------
+
+            //--------------------------- Статистика / показывает стату ------------------------------
             if (choice == 3) {
-                System.out.println("Select the information you are interested in :\n" +
-                        "1)All players \n" +
-                        "2)Dota2 players  \n" +
-                        "3)Csgo players \n" +
-                        "4)Go back \n"
+                System.out.println("""
+                        Select the information you are interested in :
+                        1)All players\s
+                        2)Dota2 players \s
+                        3)Csgo players\s
+                        4)Go back\s
+                        """
                 );
                 choice = scanner.nextInt();
                 if (choice == 1) {
@@ -118,6 +171,19 @@ public class Main {
                 System.out.println("**************************************************\n");
             }
             //-------------------------------------------------------------------------------
+
+            //---------------------------Показать манагеров------------------------------
+            if (choice == 4) {
+                System.out.println("Number of managers:" + Stats.getStats().NumberOfManagers);
+
+                manager manager;
+                for (Iterator iter = staffIterator.getIterator(); iter.hasNext(); ) {
+                    manager = (manager) iter.next();
+                    System.out.print(" Name: " + manager.getName() + " "); // можно в будущем показывать еще айдишки. Оставлю пока код "ID: " + (iter.getIndex() - 1)
+                    manager.work();
+                }
+                System.out.println("**************************************************\n");
+            }
 
 
         }

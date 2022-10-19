@@ -6,6 +6,9 @@ public class Stats {
     public int NumberOfPlayers;
     public int NumberOfDotaPlayers;
     public int NumberOfCsgoPlayers;
+    public int NumberOfStaffMembers;
+    public int NumberOfManagers;
+
 
     public static synchronized Stats getStats() {
         if (stats == null) {

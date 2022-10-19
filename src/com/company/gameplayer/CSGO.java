@@ -2,7 +2,7 @@ package com.company.gameplayer;
 
 import com.company.iterator.PlayerIterator;
 
-public class CSGO implements IGame{
+public class            CSGO implements IGame{
 
     String name;
 
@@ -35,7 +35,6 @@ public class CSGO implements IGame{
         PlayerIterator.players.add(csgoplayer);
 
     }
-
     @Override
     public String text() {
             return "I am playing CS:GO";
@@ -43,6 +42,6 @@ public class CSGO implements IGame{
 
     @Override
     public String toString() {
-        return "[CSGO " + name + "]";
+        return  name;
     }
 }

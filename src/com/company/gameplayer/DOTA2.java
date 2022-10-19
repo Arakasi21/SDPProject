@@ -43,6 +43,6 @@ public class DOTA2 implements IGame{
 
     @Override
     public String toString() {
-        return "[Dota" + name + "]";
+        return name ;
     }
 }
