@@ -1,13 +1,13 @@
 package com.company.iterator;
 
 
-import com.company.staff.manager;
+import com.company.staff.Manager;
 
 
 import java.util.ArrayList;
 
 public class StaffIterator implements Collection {
-    public static ArrayList<manager> managers = new ArrayList<>();
+    public static ArrayList<Manager> managers = new ArrayList<>();
 
     @Override
     public Iterator getIterator() {

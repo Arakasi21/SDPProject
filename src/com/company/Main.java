@@ -9,7 +9,7 @@ import com.company.factory.PlayerFactory;
 
 import com.company.iterator.PlayerIterator;
 import com.company.iterator.Iterator;
-import com.company.staff.manager;
+import com.company.staff.Manager;
 
 import com.company.workstrategy.*;
 
@@ -34,7 +34,7 @@ public class Main {
             System.out.println("[*********************** Starting Panel *****************************]\\n");
 
 
-        while (true) { //бесконечный луп для того, чтобы наша панелька не останавливалась. Остановится когда choice = 0
+        while (true) { //бесконечный луп для того, чтобы наша панелька не останавливалась. Остановится когда choice = 0 / продолжается при continue  / brake
             //-----------------Начальная панель.-----------------------
             //в будущем будут добавлены мемберы стаффа aitugaming
             System.out.println(
@@ -44,6 +44,8 @@ public class Main {
                             [2] Add member
                             [3] Show information about players
                             [4] Show information about managers
+                            [5] Switch the job of manager
+                            [6] Promote manager to Admin // in future // not added
                             [0] Close panel"""
             );
 
@@ -92,22 +94,24 @@ public class Main {
             if (choice == 2) {
                 System.out.println("Write name of new staff member:");
                 String name = scanner.next();
-                System.out.println("Choose the specialization for manager:\n" +
-                        "1)Doing event (manager) \n" +
-                        "2)Doing media (smm) \n" +
-                        "3)Go Back\n"
+                System.out.println("""
+                        Choose the specialization for manager:\s
+                        1)Doing event (manager)\s
+                        2)Doing media (smm)\s
+                        3)Go Back
+                        """
                 );
 
                 choice = scanner.nextInt();
 
                 if (choice == 1) {
-                    StaffIterator.managers.add(new manager(name, doevent));
+                    StaffIterator.managers.add(new Manager(name, doevent));
 
                     Stats.getStats().NumberOfStaffMembers++;
                     Stats.getStats().NumberOfManagers++;
 
                 } else if (choice == 2) {
-                    StaffIterator.managers.add(new manager(name, domedia));
+                    StaffIterator.managers.add(new Manager(name, domedia));
                     Stats.getStats().NumberOfStaffMembers++;
                     Stats.getStats().NumberOfManagers++;
 
@@ -172,13 +176,14 @@ public class Main {
             }
             //-------------------------------------------------------------------------------
 
+
             //---------------------------Показать манагеров------------------------------
             if (choice == 4) {
                 System.out.println("Number of managers:" + Stats.getStats().NumberOfManagers);
 
-                manager manager;
+                Manager manager;
                 for (Iterator iter = staffIterator.getIterator(); iter.hasNext(); ) {
-                    manager = (manager) iter.next();
+                    manager = (Manager) iter.next();
                     System.out.print(" Name: " + manager.getName() + " "); // можно в будущем показывать еще айдишки. Оставлю пока код "ID: " + (iter.getIndex() - 1)
                     manager.work();
                 }
@@ -186,7 +191,49 @@ public class Main {
             }
 
 
+            //---------------------------Изменение работы------------------------------
+            if (choice == 5) {
+                System.out.println("Choose the manager:");
+                Manager nameofman;
+                int index = 0;
+                for (Iterator iter = staffIterator.getIterator(); iter.hasNext(); ) {
+                    nameofman = (Manager) iter.next();
+                    System.out.print("ID: " + (iter.getIndex() - 1) + " Name: " + nameofman.getName() + "  ");
+                    nameofman.work();
+                    index = iter.getIndex();
+                }
+
+                if (index == 0) {
+                    System.out.println("List of workers is empty");
+                    continue;
+                }
+                int id = scanner.nextInt();
+                if (id > index - 1) {
+                    System.out.println("Manager not found");
+                    continue;
+                }
+
+                System.out.println("Choose the work for the employee:\n" +
+                        "1)Do Event \n" +
+                        "2)Do Media \n" +
+                        "3)Go Back\n"
+                );
+                choice = scanner.nextInt();
+                System.out.println("**************************************************");
+
+                if (choice == 1) {
+                    Manager worker = new Manager(StaffIterator.managers.get(id).getName(), doevent);
+                    StaffIterator.managers.set(id, worker);
+                } else if (choice == 2) {
+                    Manager worker = new Manager(StaffIterator.managers.get(id).getName(), domedia);
+                    StaffIterator.managers.set(id, worker);
+                }
+                } else if (choice == 3) {
+                System.out.println("Going back to start panel");
+                System.out.println("**************************************************\n");
+            }
+            }
+            //-------------------------------------------------------------------------------
         }
-    }
 }
 

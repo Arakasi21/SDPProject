@@ -1,7 +1,7 @@
 package com.company.staff;
 import com.company.workstrategy.IWork;
 
-public class manager {
+public class Manager {
     IWork workstrategy;
     private String name;
 
@@ -13,16 +13,16 @@ public class manager {
         this.name = name;
     }
 
-    public manager(String name, IWork workstrategy) {
+    public Manager(String name, IWork workstrategy) {
         this.name = name;
         this.workstrategy= workstrategy;
     }
 
-    public manager(String name) {
+    public Manager(String name) {
         this.name = name;
     }
 
-    public manager() {
+    public Manager() {
     }
 
     public void work() {

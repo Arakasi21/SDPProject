@@ -9,7 +9,6 @@ public class Stats {
     public int NumberOfStaffMembers;
     public int NumberOfManagers;
 
-
     public static synchronized Stats getStats() {
         if (stats == null) {
             return stats = new Stats();
