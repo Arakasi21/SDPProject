@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.adapter.StaffAdapter;
+import com.company.announcebot.AnnounceBot;
 import com.company.gameplayer.IGame;
 
 import com.company.iterator.StaffIterator;
@@ -9,29 +11,52 @@ import com.company.factory.PlayerFactory;
 
 import com.company.iterator.PlayerIterator;
 import com.company.iterator.Iterator;
+import com.company.staff.Admin;
 import com.company.staff.Manager;
 
+import com.company.staff.istaff;
 import com.company.workstrategy.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        ArrayList<istaff> admins = new ArrayList<istaff>();
+        Admin admin = new Admin("admin");
+        admins.add(admin);
 
+        // factory
         PlayerFactory playerFactory = new PlayerFactory();
 
+        // iterator
         PlayerIterator playerIterator = new PlayerIterator();
-        StaffIterator staffIterator = new StaffIterator();
 
+        // observer
+        StaffIterator staffIterator = new StaffIterator();
+        AnnounceBot first = new AnnounceBot("A");
+        AnnounceBot second = new AnnounceBot("B");
+        AnnounceBot third = new AnnounceBot("C");
+        AnnounceBot fourth = new AnnounceBot("D");
+        admin.addAnnounceBot(first);
+        admin.addAnnounceBot(second);
+        admin.addAnnounceBot(third);
+        admin.addAnnounceBot(fourth);
+
+        // Scanners
+        Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
+        Scanner scanner2 = new Scanner(System.in);
+
+        // Strategies
         DoMedia domedia = new DoMedia();
         DoEvent doevent = new DoEvent();
 
         System.out.println("[************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********]\n");
 
-            System.out.println("[*********************** Starting Panel *****************************]\\n");
+        System.out.println("[*********************** Starting Panel *****************************]\\n");
 
 
         while (true) { //бесконечный луп для того, чтобы наша панелька не останавливалась. Остановится когда choice = 0 / продолжается при continue  / brake
@@ -45,7 +70,10 @@ public class Main {
                             [3] Show information about players
                             [4] Show information about managers
                             [5] Switch the job of manager
-                            [6] Promote manager to Admin // in future // not added
+                            [6] Promote manager to Admin
+                            [7] Show map
+                            [8] Show admin list
+                            [9] AnnounceBot Control Panel
                             [0] Close panel"""
             );
 
@@ -115,8 +143,7 @@ public class Main {
                     Stats.getStats().NumberOfStaffMembers++;
                     Stats.getStats().NumberOfManagers++;
 
-                }
-                else if (choice == 3) {
+                } else if (choice == 3) {
                     System.out.println("Going back to start panel");
                     System.out.println("**************************************************");
                     continue;
@@ -158,7 +185,7 @@ public class Main {
                     continue;
                 } else if (choice == 3) {
                     System.out.println("The number of CSGO Players:" + Stats.getStats().NumberOfCsgoPlayers);
-                    for (Iterator iter = playerIterator.getIterator(); iter.hasNext();  ) {
+                    for (Iterator iter = playerIterator.getIterator(); iter.hasNext(); ) {
                         IGame player = (IGame) iter.next();
                         if (player.getType().equals("CSGO")) {
                             System.out.println(player);
@@ -166,7 +193,7 @@ public class Main {
                     }
                     System.out.println("**************************************************\n");
                     continue;
-                  } else if (choice == 4) {
+                } else if (choice == 4) {
                     System.out.println("Going back to start panel");
                     System.out.println("**************************************************\n");
                     continue;
@@ -228,12 +255,228 @@ public class Main {
                     Manager worker = new Manager(StaffIterator.managers.get(id).getName(), domedia);
                     StaffIterator.managers.set(id, worker);
                 }
-                } else if (choice == 3) {
+            } else if (choice == 3) {
                 System.out.println("Going back to start panel");
                 System.out.println("**************************************************\n");
             }
+
+            //-------------------------------------------------------------------------------
+            //---------------------------Повысить манагера-----------------------------
+            if (choice == 6) {
+                Manager nameOfmanager;
+                int index = 0;
+                for (Iterator iter = staffIterator.getIterator(); iter.hasNext(); ) {
+                    nameOfmanager = (Manager) iter.next();
+                    System.out.print("ID: " + (iter.getIndex() - 1) + " Name: " + nameOfmanager.getName() + "  ");
+                    nameOfmanager.work();
+                    index = iter.getIndex();
+                }
+                System.out.println("Choose worker to made it admin:");
+                int id = scanner.nextInt();
+                if (id > index - 1) {
+                    System.out.println("Manager not found");
+                    System.out.println("**************************************************");
+                    continue;
+                }
+
+                StaffAdapter staffAdapter = new StaffAdapter(StaffIterator.managers.get(id));
+                StaffIterator.managers.remove(id);
+                Stats.getStats().NumberOfManagers--;
+                admins.add(staffAdapter);
+                staffAdapter.addAnnounceBot(first);
+                staffAdapter.addAnnounceBot(second);
+                staffAdapter.addAnnounceBot(third);
+                staffAdapter.addAnnounceBot(fourth);
+
+                System.out.println("**************************************************");
+                continue;
+            }
+
+
+            //---------------------------Показать карту------------------------------
+            if (choice == 7) {
+                System.out.println("This is a map of our club cabinet");
+                System.out.println("In the Block A you can see Servers / Service department");
+                System.out.println("There is Media Room in the Block B ");
+                System.out.println("In the Block C you can see the Storage department");
+                System.out.println("In the Block D you can meet Managers department\n");
+                System.out.println("|-----------------------------------------------|");
+                System.out.println("|                |          |                   |");
+                System.out.println("|                |          |                   |");
+                System.out.println("|       A        |          |        B          |");
+                System.out.println("|                |          |                   |");
+                System.out.println("|     (Servers)  |          |   (Media Room)    |");
+                System.out.println("|________________|          |__________________ |");
+                System.out.println("|                                               |");
+                System.out.println("|                     []- Admins's room         <----Enter");
+                System.out.println("|                                               |");
+                System.out.println("|----------------|          |-------------------|");
+                System.out.println("|                |          |                   |");
+                System.out.println("|                |          |                   |");
+                System.out.println("|      D         |          |        C          |");
+                System.out.println("|                |          |                   |");
+                System.out.println("|    (Storage)   |          |    (Managers)     |");
+                System.out.println("|-----------------------------------------------|\n");
+                System.out.println("**************************************************");
+                continue;
             }
             //-------------------------------------------------------------------------------
-        }
-}
 
+
+            if (choice == 8) {
+                System.out.println("Manager list:");
+                for (istaff iAdmin : admins) {
+                    System.out.println(iAdmin.getName());
+                }
+                System.out.println("**************************************************");
+            }
+
+            //---------------------------Функции менеджера------------------------------
+            if (choice == 9) {
+                System.out.println("Write admin name:");
+                String adminSelect = scanner2.next();
+                istaff selectedAdmin = null;
+                for (istaff iStaff : admins) {
+                    if (iStaff.getName().equals(adminSelect)) {
+                        selectedAdmin = iStaff;
+                    }
+                }
+                if (selectedAdmin == null) {
+                    System.out.println("Admin not found");
+                    continue;
+                }
+                System.out.println("Choose what to do :\n" +
+                        "1)Make an announce \n" +
+                        "2)Turn on AnnounceBot  \n" +
+                        "3)Turn off AnnounceBot \n" +
+                        "4)Show active AnnounceBots \n" +
+                        "5)Go back \n"
+                );
+                choice = scanner.nextInt();
+                if (choice == 1) {
+                    System.out.println("Write your announce. Write 'cancel' to cancel.");
+                    String announce = scanner1.nextLine();
+                    if (!announce.equals("cancel") && selectedAdmin != null) {
+                        System.out.println(selectedAdmin.getName() + " notified that: ");
+                        selectedAdmin.addAnnouncement(announce);
+                    } else if (announce.equals("cancel")) {
+                        System.out.println("Announcement was canceled");
+                        continue;
+                    } else {
+                        System.out.println("Admin not found");
+                        continue;
+                    }
+                    continue;
+                } else if (choice == 2) {
+                    System.out.println("Active AnnounceBots:");
+                    for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
+                        System.out.println("Announce Bot at block: " + selectedAdmin.getAnnounceBots().get(i));
+                    }
+                    System.out.println("**************************************************");
+                    System.out.println("Choose Announcement Bot to turn on\n" +
+                            "Write 'first' to add Announcement Bot on block A\n" +
+                            "Write 'second' to add Announcement Bot on block B\n" +
+                            "Write 'third' to add Announcement Bot on block C\n" +
+                            "Write 'fourth' to add Announcement Bot on block D\n"
+                    );
+                    String announcementbot = scanner1.next();
+                    if (announcementbot.equals("first")) {
+                        boolean exists = false;
+                        for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
+                            if (selectedAdmin.getAnnounceBots().get(i).getCabinet().equals("A")) {
+                                System.out.println("Announcement Bot on block A is already activated");
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (exists == false) {
+                            selectedAdmin.addAnnounceBot(first);
+                        }
+                        continue;
+                    } else if (announcementbot.equals("second")) {
+                        boolean exists = false;
+                        for (int i = 0; i <selectedAdmin.getAnnounceBots().size(); i++) {
+                            if (selectedAdmin.getAnnounceBots().get(i).getCabinet().equals("B")) {
+                                System.out.println("Announcement Bot on block B is already activated");
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (exists == false) {
+                            selectedAdmin.addAnnounceBot(second);
+                        }
+                        continue;
+                    } else if (announcementbot.equals("third")) {
+                        boolean exists = false;
+                        for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
+                            if (selectedAdmin.getAnnounceBots().get(i).getCabinet().equals("C")) {
+                                System.out.println("Announcement Bot on block C is already activated");
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (exists == false) {
+                            selectedAdmin.addAnnounceBot(third);
+                        }
+                        continue;
+                    } else if (announcementbot.equals("fourth")) {
+                        boolean exists = false;
+                        for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
+                            if (selectedAdmin.getAnnounceBots().get(i).getCabinet().equals("D")) {
+                                System.out.println("Announcement Bot on block D is already activated");
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (exists == false) {
+                            selectedAdmin.addAnnounceBot(fourth);
+                        }
+                        continue;
+                    } else {
+                        System.out.println("LoadSpeaker not found");
+                        continue;
+
+                    }
+                } else if (choice == 3) {
+                    System.out.println("Active loadSpeakers:");
+                    for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
+                        System.out.println("LoadSpeaker at block: " + selectedAdmin.getAnnounceBots().get(i));
+                    }
+                    System.out.println("**************************************************");
+                    System.out.println("Choose Announcement Bot to turn off\n" +
+                            "Write 'first' to off Announcement Bot on block A\n" +
+                            "Write 'second' to off Announcement Bot on block B\n" +
+                            "Write 'third' to off Announcement Bot on block C\n" +
+                            "Write 'fourth' to off Announcement Bot on block D\n"
+                    );
+                    String announcebot = scanner1.next();
+                    if (announcebot.equals("first")) {
+                        selectedAdmin.removeAnnounceBot(first);
+                    } else if (announcebot.equals("second")) {
+                        selectedAdmin.removeAnnounceBot(second);
+                    } else if (announcebot.equals("third")) {
+                        selectedAdmin.removeAnnounceBot(third);
+                    } else if (announcebot.equals("fourth")) {
+                        selectedAdmin.removeAnnounceBot(fourth);
+                    } else {
+                        System.out.println("AnnounceBot not found");
+                    }
+                    continue;
+                } else if (choice == 4) {
+                    System.out.println("Active Announcement Bots:");
+                    for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
+                        System.out.println("Announcement Bot at block: " + selectedAdmin.getAnnounceBots().get(i));
+                    }
+                } else if (choice == 5) {
+                    System.out.println("Going back to start panel");
+                    continue;
+                }
+                System.out.println("**************************************************");
+                continue;
+            }
+
+            //-------------------------------------------------------------------------------
+        }
+    }
+
+}
