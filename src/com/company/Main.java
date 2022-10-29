@@ -1,22 +1,16 @@
 package com.company;
 
-import com.company.adapter.StaffAdapter;
-import com.company.announcebot.AnnounceBot;
-import com.company.gameplayer.IGame;
-
-import com.company.iterator.StaffIterator;
+import com.company.adapter.*;
+import com.company.announcebot.*;
+import com.company.iterator.*;
+import com.company.factory.*;
+import com.company.gameplayer.*;
+import com.company.iterator.*;
 import com.company.singleton.Stats;
-
-import com.company.factory.PlayerFactory;
-
-import com.company.iterator.PlayerIterator;
-import com.company.iterator.Iterator;
-import com.company.staff.Admin;
-import com.company.staff.Manager;
-
-import com.company.staff.istaff;
+import com.company.staff.*;
 import com.company.workstrategy.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -296,28 +290,7 @@ public class Main {
             //---------------------------Показать карту------------------------------
             if (choice == 7) {
                 System.out.println("This is a map of our club cabinet");
-                System.out.println("In the Block A you can see Servers / Service department");
-                System.out.println("There is Media Room in the Block B ");
-                System.out.println("In the Block C you can see the Storage department");
-                System.out.println("In the Block D you can meet Managers department\n");
-                System.out.println("|-----------------------------------------------|");
-                System.out.println("|                |          |                   |");
-                System.out.println("|                |          |                   |");
-                System.out.println("|       A        |          |        B          |");
-                System.out.println("|                |          |                   |");
-                System.out.println("|     (Servers)  |          |   (Media Room)    |");
-                System.out.println("|________________|          |__________________ |");
-                System.out.println("|                                               |");
-                System.out.println("|                     []- Admins's room         <----Enter");
-                System.out.println("|                                               |");
-                System.out.println("|----------------|          |-------------------|");
-                System.out.println("|                |          |                   |");
-                System.out.println("|                |          |                   |");
-                System.out.println("|      D         |          |        C          |");
-                System.out.println("|                |          |                   |");
-                System.out.println("|    (Storage)   |          |    (Managers)     |");
-                System.out.println("|-----------------------------------------------|\n");
-                System.out.println("**************************************************");
+                //in future
                 continue;
             }
             //-------------------------------------------------------------------------------
@@ -433,14 +406,14 @@ public class Main {
                         }
                         continue;
                     } else {
-                        System.out.println("LoadSpeaker not found");
+                        System.out.println("AnnounceBot not found");
                         continue;
 
                     }
                 } else if (choice == 3) {
-                    System.out.println("Active loadSpeakers:");
+                    System.out.println("Active AnnounceBots:");
                     for (int i = 0; i < selectedAdmin.getAnnounceBots().size(); i++) {
-                        System.out.println("LoadSpeaker at block: " + selectedAdmin.getAnnounceBots().get(i));
+                        System.out.println("AnnounceBot at block: " + selectedAdmin.getAnnounceBots().get(i));
                     }
                     System.out.println("**************************************************");
                     System.out.println("Choose Announcement Bot to turn off\n" +
@@ -474,9 +447,7 @@ public class Main {
                 System.out.println("**************************************************");
                 continue;
             }
-
             //-------------------------------------------------------------------------------
         }
     }
-
 }
