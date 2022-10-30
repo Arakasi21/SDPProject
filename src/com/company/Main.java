@@ -11,13 +11,21 @@ import com.company.staff.*;
 import com.company.workstrategy.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+//swing / jframe gui
+//    JFrame window;
+//    Container con;
+//    JPanel titleNamePanel;
+//    JLabel titleNameLabel;
+//    Font titleFont = new Font("Times New Roman", Font.PLAIN, 28);
 
     public static void main(String[] args) {
 
+        //new Main(); будущий jframe / swing
         ArrayList<istaff> admins = new ArrayList<istaff>();
         Admin admin = new Admin("admin");
         admins.add(admin);
@@ -48,17 +56,35 @@ public class Main {
         DoMedia domedia = new DoMedia();
         DoEvent doevent = new DoEvent();
 
-        System.out.println("[************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********]\n");
+        String text = ("...................\n" + "........\n" + "************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********\n");
+        int k;
+        for(k = 1; k < text.length(); k++){
+            System.out.print(text.charAt(k));
+            try{
+                Thread.sleep(25);
+            }catch(InterruptedException ex){
+                ex.printStackTrace();
+            }
+        }
 
-        System.out.println("[*********************** Starting Panel *****************************]\\n");
+        String text2 = "*********************** Starting Panel *****************************\n";
+        int k1;
+        for(k1 = 1; k1 < text2.length(); k1++){
+            System.out.print(text2.charAt(k1));
+            try{
+                Thread.sleep(25);
+            }catch(InterruptedException ex){
+                ex.printStackTrace();
+            }
+        }
+
 
 
         while (true) { //бесконечный луп для того, чтобы наша панелька не останавливалась. Остановится когда choice = 0 / продолжается при continue  / brake
             //-----------------Начальная панель.-----------------------
-            //в будущем будут добавлены мемберы стаффа aitugaming
-            System.out.println(
+            String text3 =
                     """
-                            [Choose one option:... ]\s
+                             Choose one option:... \s
                             [1] Add player
                             [2] Add member
                             [3] Show information about players
@@ -68,14 +94,32 @@ public class Main {
                             [7] Show map
                             [8] Show admin list
                             [9] AnnounceBot Control Panel
-                            [0] Close panel"""
-            );
+                            [0] Close panel\n"""
+            ;
+            int k2;
+            for(k2 = 1; k2 < text3.length(); k2++){
+                System.out.print(text3.charAt(k2));
+                try{
+                    Thread.sleep(5);
+                }catch(InterruptedException ex){
+                    ex.printStackTrace();
+                }
+            }
 
             int choice = scanner.nextInt();
             //-------------------------------------------------------------------
 
             if (choice == 0) {
-                System.out.println("[*********************** Panel Is Closed *****************************]\n");
+                String text4 = "[*********************** Panel Is Closed *****************************\n";
+                int k3;
+                for(k3 = 1; k3 < text4.length(); k3++){
+                    System.out.print(text4.charAt(k3));
+                    try{
+                        Thread.sleep(25);
+                    }catch(InterruptedException ex){
+                        ex.printStackTrace();
+                    }
+                }
                 break;
             }
 
@@ -265,7 +309,7 @@ public class Main {
                     nameOfmanager.work();
                     index = iter.getIndex();
                 }
-                System.out.println("Choose worker to made it admin:");
+                System.out.println("Choose manager to made it admin:");
                 int id = scanner.nextInt();
                 if (id > index - 1) {
                     System.out.println("Manager not found");
@@ -450,4 +494,23 @@ public class Main {
             //-------------------------------------------------------------------------------
         }
     }
+
+//    public Main(){
+//        window = new JFrame();
+//        window.setSize(800,600);
+//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        window.getContentPane().setBackground(new Color(51,51,51));
+//        window.setLayout(null);
+//        window.setVisible(true);
+//        con = window.getContentPane();
+//
+//        titleNamePanel = new JPanel();
+//        titleNamePanel.setBounds(100,100,600, 150);
+//        titleNamePanel.setBackground(new Color(51,51,51));
+//        titleNameLabel = new JLabel("************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********");
+//        titleNameLabel.setForeground(Color.BLACK);
+//        titleNameLabel.setFont(titleFont);
+//        titleNamePanel.add(titleNameLabel);
+//        con.add(titleNamePanel);
+//    }
 }
