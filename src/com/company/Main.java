@@ -1,17 +1,19 @@
 package com.company;
 
+// importing patterns
 import com.company.adapter.*;
 import com.company.announcebot.*;
 import com.company.iterator.*;
 import com.company.factory.*;
 import com.company.gameplayer.*;
-import com.company.iterator.*;
 import com.company.singleton.Stats;
 import com.company.staff.*;
 import com.company.workstrategy.*;
 
+//future gui
 import javax.swing.*;
 import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,9 +25,29 @@ public class Main {
 //    JLabel titleNameLabel;
 //    Font titleFont = new Font("Times New Roman", Font.PLAIN, 28);
 
+
+//    public Main(){
+//        window = new JFrame();
+//        window.setSize(800,600);
+//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        window.getContentPane().setBackground(new Color(51,51,51));
+//        window.setLayout(null);
+//        window.setVisible(true);
+//        con = window.getContentPane();
+//
+//        titleNamePanel = new JPanel();
+//        titleNamePanel.setBounds(100,100,600, 150);
+//        titleNamePanel.setBackground(new Color(51,51,51));
+//        titleNameLabel = new JLabel("************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********");
+//        titleNameLabel.setForeground(Color.BLACK);
+//        titleNameLabel.setFont(titleFont);
+//        titleNamePanel.add(titleNameLabel);
+//        con.add(titleNamePanel);
+//    }
+
     public static void main(String[] args) {
 
-        //new Main(); будущий jframe / swing
+//        new Main();
         ArrayList<istaff> admins = new ArrayList<istaff>();
         Admin admin = new Admin("admin");
         admins.add(admin);
@@ -494,23 +516,4 @@ public class Main {
             //-------------------------------------------------------------------------------
         }
     }
-
-//    public Main(){
-//        window = new JFrame();
-//        window.setSize(800,600);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        window.getContentPane().setBackground(new Color(51,51,51));
-//        window.setLayout(null);
-//        window.setVisible(true);
-//        con = window.getContentPane();
-//
-//        titleNamePanel = new JPanel();
-//        titleNamePanel.setBounds(100,100,600, 150);
-//        titleNamePanel.setBackground(new Color(51,51,51));
-//        titleNameLabel = new JLabel("************ WELCOME TO THE AITU GAMING CLUB ADMIN PANEL ***********");
-//        titleNameLabel.setForeground(Color.BLACK);
-//        titleNameLabel.setFont(titleFont);
-//        titleNamePanel.add(titleNameLabel);
-//        con.add(titleNamePanel);
-//    }
 }

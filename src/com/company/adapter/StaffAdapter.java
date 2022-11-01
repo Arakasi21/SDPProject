@@ -26,7 +26,7 @@ public class StaffAdapter implements istaff {
     }
 
     @Override
-    public void addAnnouncement(String announceBot) {
+    public void addAnnouncement(String announcement) {
         this.announcement = announcement;
         announce();
     }

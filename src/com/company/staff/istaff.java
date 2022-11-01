@@ -7,7 +7,7 @@ import java.util.List;
 public interface istaff {
     public String getName();
 
-    public void addAnnouncement(String announceBot);
+    public void addAnnouncement(String announcement);
 
     public void addAnnounceBot(IAnnounceBot announceBot);
 

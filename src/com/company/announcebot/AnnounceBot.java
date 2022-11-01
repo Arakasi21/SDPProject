@@ -14,7 +14,7 @@ public class AnnounceBot implements IAnnounceBot{
 
     @Override
     public void update(String announcement) {
-        System.out.println("Hello, dear staff, which located in  \n "+ cab + " We want to announce that"+ announcement + "\n");
+        System.out.println("Block " + cab + ": \n" + "Hello, dear staff,we want to announce that " + announcement + "\n");
     }
 
     @Override
